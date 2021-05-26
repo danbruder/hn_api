@@ -1,4 +1,4 @@
-//! A simple synchronous Hacker News API (v0) client library based on reqwest
+//! A simple Hacker News API (v0) client library based on reqwest
 //! and serde.
 //!
 //! The library currently implements no caching. It simply exposes endpoints as
@@ -17,17 +17,17 @@
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!   // Initialize HTTP client
-//!   let api = HnClient::init()
-//!       .expect("Could not initialize HN client");
+//!     // Initialize HTTP client
+//!     let api = HnClient::init()
+//!         .expect("Could not initialize HN client");
 //!
-//!   // Fetch latest item
-//!   let latest_item_id = api.get_max_item_id().await
-//!       .expect("Could not fetch latest item id");
-//!   let item = api.get_item(latest_item_id).await
-//!       .expect("Could not fetch item");
+//!     // Fetch latest item
+//!     let latest_item_id = api.get_max_item_id().await
+//!         .expect("Could not fetch latest item id");
+//!     let item = api.get_item(latest_item_id).await
+//!         .expect("Could not fetch item");
 //!
-//!   println!("Latest item: {:?}", item);
+//!     println!("Latest item: {:?}", item);
 //! }
 //! ```
 //!
