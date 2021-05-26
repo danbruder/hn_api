@@ -5,7 +5,7 @@ use thiserror::Error;
 /// Result
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Represents all the ways that a request can fail.
+/// Represents all the ways that the client can fail.
 #[derive(Error, Debug)]
 pub enum Error {
     /// ReqwestError

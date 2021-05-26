@@ -15,17 +15,20 @@
 //! ```rust
 //! use hn_api::HnClient;
 //!
-//! // Initialize HTTP client
-//! let api = HnClient::init()
-//!     .expect("Could not initialize HN client");
+//! #[tokio::main]
+//! async fn main() {
+//!   // Initialize HTTP client
+//!   let api = HnClient::init()
+//!       .expect("Could not initialize HN client");
 //!
-//! // Fetch latest item
-//! let latest_item_id = api.get_max_item_id()
-//!     .expect("Could not fetch latest item id");
-//! let item = api.get_item(latest_item_id)
-//!     .expect("Could not fetch item");
+//!   // Fetch latest item
+//!   let latest_item_id = api.get_max_item_id().await
+//!       .expect("Could not fetch latest item id");
+//!   let item = api.get_item(latest_item_id).await
+//!       .expect("Could not fetch item");
 //!
-//! println!("Latest item: {:?}", item);
+//!   println!("Latest item: {:?}", item);
+//! }
 //! ```
 //!
 //! For an example, see `examples/top.rs`.
@@ -59,96 +62,116 @@ impl HnClient {
     /// Return the item with the specified id.
     ///
     /// May return `None` if item id is invalid.
-    pub fn get_item(&self, id: u32) -> Result<Option<types::Item>> {
+    pub async fn get_item(&self, id: u32) -> Result<Option<types::Item>> {
         Ok(self
             .client
             .get(&format!("{}/item/{}.json", API_BASE_URL, id))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return the user with the specified username.
     ///
     /// May return `None` if username is invalid.
-    pub fn get_user(&self, username: &str) -> Result<Option<types::User>> {
+    pub async fn get_user(&self, username: &str) -> Result<Option<types::User>> {
         Ok(self
             .client
             .get(&format!("{}/user/{}.json", API_BASE_URL, username))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return the id of the newest item.
     ///
     /// To get the 10 latest items, you can decrement the id 10 times.
-    pub fn get_max_item_id(&self) -> Result<u32> {
+    pub async fn get_max_item_id(&self) -> Result<u32> {
         Ok(self
             .client
             .get(&format!("{}/maxitem.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return a list of top story item ids.
-    pub fn get_top_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_top_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/topstories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return a list of new story item ids.
-    pub fn get_new_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_new_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/newstories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return a list of best story item ids.
-    pub fn get_best_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_best_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/beststories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return up to 200 latest Ask HN story item ids.
-    pub fn get_ask_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_ask_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/askstories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return up to 200 latest Show HN story item ids.
-    pub fn get_show_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_show_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/showstories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return up to 200 latest Job story item ids.
-    pub fn get_job_stories(&self) -> Result<Vec<u32>> {
+    pub async fn get_job_stories(&self) -> Result<Vec<u32>> {
         Ok(self
             .client
             .get(&format!("{}/jobstories.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 
     /// Return a list of items and users that have been updated recently.
-    pub fn get_updates(&self) -> Result<types::Updates> {
+    pub async fn get_updates(&self) -> Result<types::Updates> {
         Ok(self
             .client
             .get(&format!("{}/updates.json", API_BASE_URL))
-            .send()?
-            .json()?)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 }
